@@ -12,49 +12,57 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.company.enroller.model.Meeting;
 import com.company.enroller.model.Participant;
-import com.company.enroller.persistence.ParticipantService;
+import com.company.enroller.persistence.MeetingService;
 
 
 @RestController
 
-@RequestMapping("/participants")
+@RequestMapping("/meetings")
 
 public class ParticipantRestController {
 
 
 	@Autowired
 
-	ParticipantService participantService;
+	MeetingService meetingtService;
 
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 
-	public ResponseEntity<?> getParticipants() {
+	public ResponseEntity<?> getMeetings() {
 
-		Collection<Participant> participants = participantService.getAll();
+		Collection<Meeting> participants = meetingService.getAll();
 
-		return new ResponseEntity<Collection<Participant>>(participants, HttpStatus.OK);
+		return new ResponseEntity<Collection<Meeting>>(meetings, HttpStatus.OK);
 
 	}
 
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 
-	public ResponseEntity<?> getParticipant(@PathVariable("id") String login) {
+	public ResponseEntity<?> getMeeting(@PathVariable("id") long id) {
 
-		Participant participant = participantService.findByLogin(login);
+		Meeting meeting = meetingService.findByLogin(id);
 
-		if (participant == null) {
+		if (meeting == null) {
 
 			return new ResponseEntity(HttpStatus.NOT_FOUND);
 
 		}
 
 
-		return new ResponseEntity<Participant>(participant, HttpStatus.OK);
+		return new ResponseEntity<Participant>(Meeting, HttpStatus.OK);
 
 	}
+
+	// POST http://localhost
+	// znajdz spotkanie
+	// znajdz uczestnika w systemie
+	// meeting.addParticipant(participant)
+	// update meeting
+	// OK
 
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
