@@ -2,8 +2,8 @@ package com.company.enroller.persistence;
 
 import java.util.Collection;
 
-import javax.websocket.Session;
-
+//import javax.websocket.Session;
+import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.stereotype.Component;
 
@@ -23,29 +23,29 @@ public class ParticipantService {
 	}
 	
 	public Participant findByLogin(String login) {
-		Participant participant = (Participant) session.get(Participant.class, login);
-		return participant;
-
+		// Participant participant = (Participant) session.get(Participant.class,
+		// login);
+		// return participant;
+		return (Participant) session.get(Participant.class, login);
 	}
 
 	public void add(Participant participant) {
 		Transaction transaction = this.session.beginTransaction();
 		session.save(participant);
-	transaction.commit();
+		transaction.commit();
+	}
 
-}
+	public void delete(Participant participant) {
+		Transaction transaction = this.session.beginTransaction();
+		session.delete(participant);
+		transaction.commit();
 
-public void delete(Participant participant) {
-	Transaction transaction = this.session.beginTransaction();
-	session.delete(participant);
-	transaction.commit();
+	}
 
-}
-
-public void update(Participant participant) {
-	Transaction transaction = this.session.beginTransaction();
-	session.merge(participant);
-	transaction.commit();
-}
+	public void update(Participant participant) {
+		Transaction transaction = this.session.beginTransaction();
+		session.merge(participant);
+		transaction.commit();
+	}
 
 }
